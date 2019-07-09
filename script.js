@@ -41,24 +41,36 @@ let whoWins = function(winner) {
 
 for(let i = 0; i < gameImg.length; i++) {
     // Image fades when user hovers over it
-    gameImg[i].addEventListener('mouseenter', function() {
-        gameImg[i].style.opacity = '0.5';
-    })
-    gameImg[i].addEventListener('mouseleave', function() {
-        gameImg[i].style.opacity = '1.0';
-    })
+    // gameImg[i].addEventListener('mouseenter', function() {
+    //     gameImg[i].style.opacity = '0.2';
+    // })
+    // gameImg[i].addEventListener('mouseleave', function() {
+    //     gameImg[i].style.opacity = '1.0';
+    // })
 
-
+    gameImg[i].style.opacity = '0.2'
     // Adding click event to player's options
     gameImg[i].addEventListener('click', function(element) {
         let tempId = element.target.parentNode.id;
         let tempPick = tempId.split('-')[0];
+        
         if (tempPick === 'player') {
+            // All images will have their opacity reduced,
+            // but the ones that were selected (player/robot)
+            for(let j = 0; j < gameImg.length; j++) {
+                gameImg[j].style.opacity = '0.2';
+            }
+
             playerPick = tempId.split('-')[2];
+            document.getElementById('player-pick-' + playerPick).firstChild.style.opacity = '1.0'
+
             // Randomizes robot's play everytime the player plays!
             robotPick = Math.floor((Math.random() * 3) + 1)
+            document.getElementById('robot-pick-' + robotPick).firstChild.style.opacity = '1.0'
+
             console.log('Yoshimi picks', playerPick);
             console.log('Robot picks', robotPick);
+            
             whoWins(gameLogic(playerPick, robotPick));
             console.log('-----------------------------');
         } else {
