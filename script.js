@@ -1,7 +1,9 @@
 let gameImg = document.getElementsByClassName('gameimg')
 
 let playerPick = 0;
+let playerScore = 0;
 let robotPick = 0;
+let robotScore = 0;
 let winner = -1; // 0: draw - 1: player wins, 2: robot wins
 
 // 1 - Rock
@@ -23,14 +25,17 @@ let gameLogic = function(playerOption, robotOption) {
 }
 
 let whoWins = function(winner) {
-    let message = document.getElementById('messageResult')
-    console.log('Winner ID:', winner)
+    let resultMessage = document.getElementById('messageResult')
     if(winner === 0) {
-        message.innerHTML = 'DRAW';
+        resultMessage.innerHTML = 'DRAW';
     } else if(winner === 1) {
-        message.innerHTML = 'Player WINS !!!';
+        resultMessage.innerHTML = 'Yoshimi WINS !!!';
+        playerScore++;
+        document.getElementById('player-score').innerHTML = `Score: ${playerScore}`
     } else if (winner === 2) {
-        message.innerHTML = 'Robot WINS !!!';
+        resultMessage.innerHTML = 'Bad Robot WINS !!!';
+        robotScore++;
+        document.getElementById('robot-score').innerHTML = `Score: ${robotScore}`
     }
 }
 
@@ -43,6 +48,7 @@ for(let i = 0; i < gameImg.length; i++) {
         gameImg[i].style.opacity = '1.0';
     })
 
+
     // Adding click event to player's options
     gameImg[i].addEventListener('click', function(element) {
         let tempId = element.target.parentNode.id;
@@ -51,7 +57,7 @@ for(let i = 0; i < gameImg.length; i++) {
             playerPick = tempId.split('-')[2];
             // Randomizes robot's play everytime the player plays!
             robotPick = Math.floor((Math.random() * 3) + 1)
-            console.log('Player picks', playerPick);
+            console.log('Yoshimi picks', playerPick);
             console.log('Robot picks', robotPick);
             whoWins(gameLogic(playerPick, robotPick));
             console.log('-----------------------------');
